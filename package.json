@@ -1,5 +1,6 @@
 {
-  "name": "mdx-stack-0768",
+  "name": "my-blog",
+  "author": "Janessa Garrow",
   "private": true,
   "sideEffects": false,
   "scripts": {
