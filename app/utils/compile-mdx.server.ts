@@ -14,6 +14,8 @@ async function compileMdxImpl<FrontmatterType extends Record<string, unknown>>({
   const { default: remarkGfm } = await import('remark-gfm')
   const { default: remarkSlug } = await import('remark-slug')
   const { default: rehypeHighlight } = await import('rehype-highlight')
+  const {default: remarkCodeHike} = await import('@code-hike/mdx')
+  const theme = await import("shiki/themes/nord.json")
 
   const indexPattern = /index.mdx?$/
   const indexFile = files.find(({ path }) => path.match(indexPattern))
@@ -36,9 +38,10 @@ async function compileMdxImpl<FrontmatterType extends Record<string, unknown>>({
     const { code, frontmatter } = await bundleMDX({
       source: indexFile.content,
       files: filesObject,
-      xdmOptions: options => ({
+      mdxOptions: options => ({
         remarkPlugins: [
           ...(options.remarkPlugins ?? []),
+          [remarkCodeHike, { theme, showCopyButton: true }],
           remarkSlug,
           [remarkAutolinkHeader, { behavior: 'wrap' }],
           remarkGfm,
