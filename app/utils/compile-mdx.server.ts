@@ -1,6 +1,7 @@
 import { bundleMDX } from 'mdx-bundler'
 import type { GitHubFile } from '~/types'
 import { getQueue } from './p-queue.server'
+import theme from 'shiki/themes/nord.json'
 
 async function compileMdxImpl<FrontmatterType extends Record<string, unknown>>({
   slug,
@@ -14,8 +15,7 @@ async function compileMdxImpl<FrontmatterType extends Record<string, unknown>>({
   const { default: remarkGfm } = await import('remark-gfm')
   const { default: remarkSlug } = await import('remark-slug')
   const { default: rehypeHighlight } = await import('rehype-highlight')
-  const {default: remarkCodeHike} = await import('@code-hike/mdx')
-  const theme = await import("shiki/themes/nord.json")
+  const { remarkCodeHike } = await import('@code-hike/mdx')
 
   const indexPattern = /index.mdx?$/
   const indexFile = files.find(({ path }) => path.match(indexPattern))
@@ -41,7 +41,7 @@ async function compileMdxImpl<FrontmatterType extends Record<string, unknown>>({
       mdxOptions: options => ({
         remarkPlugins: [
           ...(options.remarkPlugins ?? []),
-          [remarkCodeHike, { theme, showCopyButton: true }],
+          [remarkCodeHike, { theme, showCopyButton: true, lineNumbers: true }],
           remarkSlug,
           [remarkAutolinkHeader, { behavior: 'wrap' }],
           remarkGfm,
