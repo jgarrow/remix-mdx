@@ -8,4 +8,10 @@ module.exports = {
   serverBuildDirectory: 'build',
   devServerPort: 8002,
   ignoredRouteFiles: ['.*'],
+  serverDependenciesToBundle: [
+    /^rehype.*/,
+    /^remark.*/,
+    'mdx-bundler',
+    'p-queue',
+  ],
 }
