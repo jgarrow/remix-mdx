@@ -1,7 +1,6 @@
-# fly.toml file generated for mdx-blog on 2022-04-27T13:29:15-06:00
+# fly.toml file generated for mdx-blog on 2023-01-18T22:13:26-05:00
 
 app = "mdx-blog"
-
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
@@ -25,7 +24,6 @@ processes = []
   processes = ["app"]
   protocol = "tcp"
   script_checks = []
-
   [services.concurrency]
     hard_limit = 25
     soft_limit = 20
@@ -39,7 +37,6 @@ processes = []
     protocol = "http"
     timeout = 2000
     tls_skip_verify = false
-
     [services.http_checks.headers]
 
   [[services.ports]]
