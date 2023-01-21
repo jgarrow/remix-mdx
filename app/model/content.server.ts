@@ -1,10 +1,14 @@
 import db from '~/utils/db.server'
 import { getQueue } from '~/utils/p-queue.server'
+import { Content } from '@prisma/client'
+
+const whereOptions =
+  process.env.NODE_ENV !== 'development' ? { published: true } : {}
 
 export async function getMdxCount(contentDirectory: string) {
   const count = await db.content.aggregate({
     _count: { _all: true },
-    where: { published: true, contentDirectory },
+    where: { ...whereOptions, contentDirectory },
   })
 
   return count._count._all
@@ -13,7 +17,7 @@ export async function getMdxCount(contentDirectory: string) {
 export async function requiresUpdate(contentDirectory: string) {
   const requiresUpdateCount = await db.content.aggregate({
     _count: { requiresUpdate: true },
-    where: { published: true, contentDirectory },
+    where: { ...whereOptions, contentDirectory },
   })
 
   if (requiresUpdateCount._count.requiresUpdate === 0) {
@@ -27,9 +31,16 @@ export async function requiresUpdate(contentDirectory: string) {
   return requiresUpdate
 }
 
-export async function getContentList(contentDirectory = 'blog') {
+export async function getContentList(
+  contentDirectory = 'blog',
+): Promise<
+  Pick<
+    Content,
+    'slug' | 'title' | 'timestamp' | 'description' | 'frontmatter'
+  >[]
+> {
   const contents = await db.content.findMany({
-    where: { published: true, contentDirectory },
+    where: { ...whereOptions, contentDirectory },
     select: {
       slug: true,
       title: true,
@@ -45,7 +56,7 @@ export async function getContentList(contentDirectory = 'blog') {
 
 export async function getContent(slug: string) {
   const rows = await db.content.findMany({
-    where: { slug, published: true },
+    where: { slug, ...whereOptions },
     select: {
       code: true,
       contentDirectory: true,
@@ -89,8 +100,8 @@ async function setRequiresUpdateImpl({
       code: '',
       contentDirectory,
       frontmatter: '',
-      published: true,
       title: '',
+      published: true
     },
     update: {
       requiresUpdate: true,
