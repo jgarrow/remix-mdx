@@ -1,29 +1,20 @@
 import * as React from 'react'
-import { useLoaderData } from '@remix-run/react'
-import type {
-  HeadersFunction,
-  LinksFunction,
-  LoaderFunction,
-  MetaFunction,
-} from '@remix-run/server-runtime'
-import { json } from '@remix-run/server-runtime'
 import BlogList from '~/components/blog-list'
 import { getMdxListItems } from '~/utils/mdx.server'
 import { getSeo } from '~/utils/seo'
-
-type LoaderData = { blogList: Awaited<ReturnType<typeof getMdxListItems>> }
+import { typedjson, useTypedLoaderData } from 'remix-typedjson'
 
 const [seoMeta, seoLinks] = getSeo()
 
-export const meta: MetaFunction = () => {
+export function meta() {
   return { ...seoMeta }
 }
 
-export const links: LinksFunction = () => {
+export function links() {
   return [...seoLinks]
 }
 
-export const headers: HeadersFunction = ({ loaderHeaders }) => {
+export function headers({ loaderHeaders }: { loaderHeaders: Headers }) {
   return {
     'cache-control':
       loaderHeaders.get('cache-control') ?? 'private, max-age=60',
@@ -31,17 +22,17 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
   }
 }
 
-export const loader: LoaderFunction = async () => {
+export async function loader() {
   const blogList = await getMdxListItems({ contentDirectory: 'blog' })
 
-  return json<LoaderData>(
+  return typedjson(
     { blogList: blogList.slice(0, 10) },
     { headers: { 'cache-control': 'private, max-age=60' } },
   )
 }
 
 export default function Index() {
-  const { blogList } = useLoaderData<LoaderData>()
+  const { blogList } = useTypedLoaderData<typeof loader>()
 
   return (
     <>
