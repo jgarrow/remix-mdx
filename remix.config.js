@@ -11,7 +11,16 @@ module.exports = {
   serverDependenciesToBundle: [
     /^rehype.*/,
     /^remark.*/,
+    /^mdast.*/,
+    /^hast.*/,
+    /^unist.*/,
+    /^micromark.*/,
     'mdx-bundler',
     'p-queue',
+    'p-timeout',
+    'lowlight',
+    'fault',
+    'ccount',
+    'markdown-table'
   ],
 }
