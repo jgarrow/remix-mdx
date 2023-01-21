@@ -1,16 +1,16 @@
 import type {
   HeadersFunction,
   LinksFunction,
-  LoaderFunction,
   MetaFunction,
 } from '@remix-run/server-runtime'
-import { json } from '@remix-run/server-runtime'
-import { useLoaderData } from '@remix-run/react'
 import BlogList from '~/components/blog-list'
 import { getMdxListItems } from '~/utils/mdx.server'
 import { getSeo } from '~/utils/seo'
+import { typedjson, useTypedLoaderData } from 'remix-typedjson'
 
-type LoaderData = { blogList: Awaited<ReturnType<typeof getMdxListItems>> }
+export type LoaderData = {
+  blogList: Awaited<ReturnType<typeof getMdxListItems>>
+}
 
 const [seoMeta, seoLinks] = getSeo({
   title: 'Blogs',
@@ -21,15 +21,15 @@ const [seoMeta, seoLinks] = getSeo({
   },
 })
 
-export const meta: MetaFunction = () => {
+export function meta() {
   return { ...seoMeta }
 }
 
-export const links: LinksFunction = () => {
+export function links() {
   return [...seoLinks]
 }
 
-export const headers: HeadersFunction = ({ loaderHeaders }) => {
+export function headers({ loaderHeaders }: { loaderHeaders: Headers }) {
   return {
     'cache-control':
       loaderHeaders.get('cache-control') ?? 'private, max-age=60',
@@ -37,11 +37,9 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
   }
 }
 
-export const loader: LoaderFunction = async () => {
-  const blogList = await getMdxListItems({ contentDirectory: 'blog' })
-
-  return json<LoaderData>(
-    { blogList },
+export async function loader() {
+  return typedjson(
+    { blogList: await getMdxListItems({ contentDirectory: 'blog' }) },
     {
       headers: { 'cache-control': 'private, max-age=60', Vary: 'Cookie' },
     },
@@ -49,7 +47,7 @@ export const loader: LoaderFunction = async () => {
 }
 
 export default function Blog() {
-  const { blogList } = useLoaderData<LoaderData>()
+  const { blogList } = useTypedLoaderData<typeof loader>()
 
   return (
     <section className='mx-auto min-h-screen max-w-4xl pt-24'>

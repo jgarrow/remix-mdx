@@ -1,9 +1,7 @@
-import type { getMdxListItems } from '~/utils/mdx.server'
 import BlogItem from './blog-item'
+import { LoaderData as BlogListData } from '~/routes/blog'
 
-type BlogListType = { blogList: Awaited<ReturnType<typeof getMdxListItems>> }
-
-export default function BlogList({ blogList }: BlogListType) {
+export default function BlogList({ blogList }: BlogListData) {
   return (
     <ol className='flex flex-col'>
       {blogList.map(blogItem => (

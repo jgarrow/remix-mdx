@@ -12,8 +12,6 @@ import invariant from 'tiny-invariant'
 import { getMdxPage } from '~/utils/mdx.server'
 import type { MdxComponent } from '~/types'
 import CustomComponent from '~/components/custom-component'
-
-import styles from '~/styles/blog-post.css'
 import codeHikeStyles from '@code-hike/mdx/dist/index.css'
 import { getSeoMeta } from '~/utils/seo'
 
@@ -33,7 +31,6 @@ export const meta: MetaFunction = ({ data }: { data: MdxComponent }) => {
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: codeHikeStyles },
-  { rel: 'stylesheet', href: styles },
 ]
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
@@ -54,7 +51,7 @@ export const loader: LoaderFunction = async ({ params }) => {
     throw json(null, { status: 404 })
   }
 
-  return json<MdxComponent>(mdxPage, {
+  return json(mdxPage, {
     headers: { 'cache-control': 'private, max-age: 60', Vary: 'Cookie' },
   })
 }
