@@ -177,7 +177,7 @@ jobs:
             ${{ runner.os }}-buildx-
 
       - name: 🔑 Fly Registry Auth
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: registry.fly.io
           username: x
@@ -222,7 +222,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: 🚀 Deploy
-        uses: superfly/flyctl-actions@1.1
+        uses: superfly/flyctl-actions@1.3
         with:
           args:
             'deploy -i registry.fly.io/${{ secrets.FLY_APP_NAME }}:${{ github.sha }}
