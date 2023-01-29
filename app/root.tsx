@@ -13,11 +13,11 @@ import type { LinksFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { json } from '@remix-run/server-runtime'
 import Nav from '~/components/nav'
 import appStyles from '~/styles/app.css'
-import Footer, { preloadFooterSvg } from './components/footer'
-import { preloadSvg } from './components/theme-toggle'
-import type { Theme } from './utils/theme'
+import Footer, { preloadFooterSvg } from '~/components/footer'
+import { preloadSvg } from '~/components/theme-toggle'
+import type { Theme } from '~/utils/theme'
 import { SsrTheme, ThemeMeta, ThemeProvider, useTheme } from './utils/theme'
-import { getThemeSession } from './utils/theme-session.server'
+import { getThemeSession } from '~/utils/theme-session.server'
 
 type LoaderData = { theme: Theme | null }
 

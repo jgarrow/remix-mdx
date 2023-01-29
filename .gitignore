@@ -15,3 +15,5 @@ app/styles
 app/**/*.ignore.*
 
 cypress/videos/
+
+.DS_Store

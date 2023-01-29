@@ -12,6 +12,12 @@
   }
 }
 
+@layer utilities {
+  .ripped-paper {
+    clip-path: url(#ripped-paper);
+  }
+}
+
 @font-face {
   font-family: 'Poppins';
   src: url('/fonts/Poppins-Bold.ttf') format('truetype');
