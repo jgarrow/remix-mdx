@@ -1,28 +1,30 @@
-import { Link } from '@remix-run/react'
+import { Link } from '~/components/link'
 import type { getMdxListItems } from '~/utils/mdx.server'
-import { RippedPaper } from '~/components/ripped-paper'
+import { ChevronsRight } from 'lucide-react'
 
 type BlogItemType = Awaited<ReturnType<typeof getMdxListItems>>[0]
 
 export default function BlogItem({ description, slug, title }: BlogItemType) {
   return (
-    <li className='ripped-paper relative mb-6 w-[300px] rounded-t-lg bg-slate-100 bg-cover p-4 dark:bg-slate-700'>
+    <li className='ripped-paper relative flex h-[250px] flex-col justify-between gap-2 rounded-t-lg bg-slate-100 bg-cover p-8 text-lg dark:bg-slate-700'>
       <Link
         prefetch='intent'
         to={`/blog/${slug}`}
-        className='flex h-auto flex-col gap-2'
+        className='font-accent text-xl'
       >
-        <h2 className='text-2xl font-bold text-gray-800 dark:text-gray-50'>
-          {title}
-        </h2>
-        <p className='text-base text-gray-600 dark:text-gray-200'>
-          {description}
-        </p>
-        <div className='text-base font-bold text-gray-800 dark:text-gray-100'>
-          Read more
-        </div>
+        {title}
       </Link>
-      <RippedPaper />
+      <p className='text-gray-600 line-clamp-2 dark:text-gray-200'>
+        {description}
+      </p>
+      <Link
+        prefetch='intent'
+        to={`/blog/${slug}`}
+        className='ml-[-1.75rem] flex items-center gap-1 pr-6 pl-7 py-2 text-gray-600 dark:text-gray-200'
+        shouldAnimate={true}
+      >
+        Read more <ChevronsRight />
+      </Link>
     </li>
   )
 }

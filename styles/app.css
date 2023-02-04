@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: theme('fontFamily.accent');
+  }
+}
+
 @layer components {
   [data-reach-skip-nav-link]:focus {
     @apply rounded bg-sky-500;
@@ -9,6 +15,10 @@
 
   .dark [data-reach-skip-nav-link]:focus {
     @apply bg-gray-700;
+  }
+
+  .brush-stroke {
+    @apply w-fit relative px-8 pt-5 pb-3 clip-path-url-[#brush-stroke] hover:before:scale-x-100 before:h-full before:w-full before:content-[""] before:absolute before:top-0 before:left-0 before:z-[-1] before:bg-sky-100 before:scale-x-0 before:origin-bottom-right before:transition before:ease-out before:duration-200 hover:before:origin-bottom-left;
   }
 }
 
@@ -32,4 +42,49 @@
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "flood-std", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@media (prefers-reduced-motion) {
+  .brush-stroke {
+    clip-path: unset;
+  }
+
+  .brush-stroke::before {
+    transform: unset;
+    background: unset;
+  }
+
+  .brush-stroke:hover::before {
+    transform: unset;
+  }
 }

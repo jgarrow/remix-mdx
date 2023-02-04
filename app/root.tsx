@@ -18,6 +18,8 @@ import { preloadSvg } from '~/components/theme-toggle'
 import type { Theme } from '~/utils/theme'
 import { SsrTheme, ThemeMeta, ThemeProvider, useTheme } from './utils/theme'
 import { getThemeSession } from '~/utils/theme-session.server'
+import { BrushStrokeSvg } from './components/brush-stroke'
+import { RippedPaper } from './components/ripped-paper'
 
 type LoaderData = { theme: Theme | null }
 
@@ -25,6 +27,21 @@ export const links: LinksFunction = () => {
   return [
     { rel: 'stylesheet', href: skipNavStyles },
     { rel: 'stylesheet', href: appStyles },
+    { rel: 'stylesheet', href: 'https://use.typekit.net/ofp2xbz.css' },
+    {
+      rel: 'preload',
+      href: '/fonts/Inter-Regular.ttf',
+      as: 'font',
+      type: 'font/ttf',
+      crossOrigin: 'anonymous',
+    },
+    {
+      rel: 'preload',
+      href: '/fonts/Inter-Bold.ttf',
+      as: 'font',
+      type: 'font/ttf',
+      crossOrigin: 'anonymous',
+    },
     {
       rel: 'preload',
       href: '/fonts/Poppins-Regular.ttf',
@@ -76,6 +93,8 @@ function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
+        <BrushStrokeSvg />
+        <RippedPaper />
       </body>
     </html>
   )

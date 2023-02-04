@@ -6,9 +6,14 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Poppins', ...theme.fontFamily.sans],
+        sans: ['Inter', ...theme.fontFamily.sans],
+        accent: ['flood-std', 'Inter', ...theme.fontFamily.sans]
       },
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/line-clamp'),
+    require('tailwind-clip-path'),
+  ],
 }
