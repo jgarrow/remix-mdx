@@ -22,7 +22,7 @@ export default function NavLink({ className, ...rest }: NavLinkProps) {
           isActive
             ? 'hover:text-gray-100 dark:text-gray-800'
             : brushAnimation,
-          className,
+          className as string, // hacky hack
         )
       }
       {...rest}
