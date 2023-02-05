@@ -58,6 +58,7 @@
     "remix-seo": "^0.1.0",
     "remix-typedjson": "^0.1.7",
     "shiki": "^0.10.1",
+    "tailwind-merge": "^1.9.0",
     "tiny-invariant": "^1.2.0",
     "unist-util-visit": "^4.1.1"
   },
@@ -103,7 +104,6 @@
     "prisma": "^3.9.2",
     "start-server-and-test": "^1.14.0",
     "tailwind-clip-path": "^1.0.0",
-    "tailwind-merge": "^1.9.0",
     "tailwindcss": "^3.0.23",
     "typescript": "^4.6.3",
     "vite": "^2.9.0",
